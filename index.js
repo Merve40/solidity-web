@@ -28,13 +28,7 @@ var fs = require('fs');
 var exec = require('child_process').exec;
 
 // pre-check
-if (!fs.existsSync('build/contracts')) {
-    console.log("Seems like there are no contracts to generate.");
-    return;
-} else if (fs.readdirSync('build/contracts').length == 0) {
-    console.log("Seems like there are no contracts to generate.");
-    return;
-}
+
 
 var appDir = "app";
 var resourcesDir = appDir + "/contracts/";
@@ -122,6 +116,14 @@ exec('truffle migrate --reset', (err, stdout, stderr) => {
 });
 
 function generateFiles() {
+
+    if (!fs.existsSync('build/contracts')) {
+        console.log("Seems like there are no contracts to generate.");
+        return;
+    } else if (fs.readdirSync('build/contracts').length == 0) {
+        console.log("Seems like there are no contracts to generate.");
+        return;
+    }
 
     var files = fs.readdirSync('build/contracts');
     for (var f in files) {
@@ -214,6 +216,14 @@ deployer.deploy(`+ contractName + `);
 }
 
 function generateExpress() {
+
+    if (!fs.existsSync('build/contracts')) {
+        console.log("Seems like there are no contracts to generate.");
+        return;
+    } else if (fs.readdirSync('build/contracts').length == 0) {
+        console.log("Seems like there are no contracts to generate.");
+        return;
+    }
 
     var indexFile = webDir + "index.html";
     var contractsFile = webDir + "contracts.js";
