@@ -8,6 +8,7 @@
   "author": "Merve Sahin <merve_sahin_94@hotmail.de> (https://github.com/Merve40)",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.16.4",
     "ganache-cli": "^6.3.0"
   },
   "preferGlobal": true,

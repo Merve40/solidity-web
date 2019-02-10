@@ -304,7 +304,7 @@ module.exports=function(app){
     
         return{
             addScript : function(contract){
-                html+="\n\t<script src='"+contract.split('\.')[0]+"' type='application/javascript'></script>"; 
+                html+="\n\t\t<script src='"+contract.split('\.')[0]+"' type='application/javascript'></script>"; 
             },
             mkfile: function(file){
                 if(!fs.existsSync(file)){
