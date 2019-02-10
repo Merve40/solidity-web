@@ -1,0 +1,17 @@
+{
+  "name": "solidity-web",
+  "version": "0.1.0",
+  "description": "A simple framework for developing web applications with smart contracts written in solidity. ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Merve Sahin <merve_sahin_94@hotmail.de> (https://github.com/Merve40)",
+  "license": "MIT",
+  "dependencies": {
+    "ganache-cli": "^6.3.0"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "solidity-web": "index.js"
+  }
+}
