@@ -41,10 +41,12 @@ var resourcesDir = appDir + "/contracts/";
 var webDir = appDir + "/web/";
 
 //default values
+
 var port = 8545;
 var host = "127.0.0.1";
 var webPort = 8181;
 var webHost = "localhost";
+
 
 for(var arg in args){
     if(args[arg].includes("=")){
