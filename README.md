@@ -33,6 +33,11 @@ The command below will deploy your contracts and use the default configurations 
 ```
 solidity-web
 ```    
+If you want to deploy with custom web-host and web-port, you can provide additional arguments:    
+```
+solidity-web web-host=<host> web-port=<port-number>
+```
+
 This command calls truffle's `truffle migrate` command underneath, which compiles the `.sol` files and creates `build` folder with json files.
 On top of this, the `solidity-web` tool will generate an `app` folder, which contains the client-side implementation. The `app.js` file is the server-side code, which launches the container. 
 It can be changed to add rest functionality or html/javascript/css. The `contracts.js` file creates a reference for each smart-contract.
