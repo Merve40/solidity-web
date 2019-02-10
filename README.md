@@ -1,8 +1,8 @@
-## Solidity Web Automation Tool Built on Top of Truffle
+# Solidity Web Automation Tool 
 
-This tool makes use of [truffle-suite](https://github.com/trufflesuite/ganache-cli), 
-[express.js](https://github.com/expressjs/express) and [web3.js](https://github.com/ethereum/web3.js) for deploying server- and client-side code.
-It automatically and dynamically generates client-side code for accessing your smart-contracts. With this tool, you do not have to worry about configuration anymore, simply implement your smart-contracts, deploy and access them with the generated client-side instances. 
+This tool is built on top of [truffle-suite](https://github.com/trufflesuite/ganache-cli) and
+[express.js](https://github.com/expressjs/express) for deploying server-side code. The client-side is implemented using  [web3.js](https://github.com/ethereum/web3.js).
+It automatically and dynamically generates client-side code for accessing your smart-contracts. With this tool, you do not have to worry about configuration anymore, simply implement your smart-contracts, deploy and access them with the generated code. 
 
 ### Steps    
 **1. Initialize truffle**    
