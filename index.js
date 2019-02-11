@@ -5,26 +5,28 @@ var exec = require('child_process').exec;
 var cmdArgs = process.argv.slice(2);
 
 
-
 /**
  * Automation tool.
  */
 var solidity_web = (function(){
 
     var help =`
-arguments:
-----------------------
 
-port=<port-number>\t\t\tport number of ganache-cli -> default: 8545
+solidity-web is a tool for autogenerating server- and client-code.
 
-host=<host>\t\t\t\thost ip or host name of ganache-cli -> default: 127.0.0.1
+COMMANDS
+    init
+    deploy [OPTION]...
+    
+OPTIONS
+    port=<port-number>\t\t\tport number of ganache-cli -> default: 8545
+    host=<host>\t\t\t\thost ip or host name of ganache-cli -> default: 127.0.0.1
+    web-port=<port-number>\t\tport number of web-server (express) -> default: localhost
+    web-host=<host>\t\t\thost ip or host name of web-server (express) -> default: 8181
 
-web-port=<port-number>\t\t\tport number of web-server (express) -> default: localhost
-
-web-host=<host>\t\t\t\thost ip or host name of web-server (express) -> default: 8181
-
-
-usage example:\tweb-init web-port=8081 web-host=localhost
+USAGE
+    solidity-web init
+    solidity-web deploy web-port=8081 web-host=localhost
 `;
 
     var appDir = "app";
@@ -58,9 +60,6 @@ usage example:\tweb-init web-port=8081 web-host=localhost
                     console.log(help);
                     return;
                 }
-            }else{
-                console.log(help);
-                return;
             }
         }
     }
@@ -190,35 +189,39 @@ usage example:\tweb-init web-port=8081 web-host=localhost
      */
     var main = function (args){
 
-        if(args.includes("help") || args.includes("--help") || args.includes("-h")){
+        if(args.length == 0 || args.includes("help") || args.includes("--help") || args.includes("-h")){
             console.log(help);
             return;
+
+        }else if(args.length == 1 && args[0] == "init"){
+            print("migrations");
+            generateMigrations();
+            return;
+
+        }else if(args.includes("deploy") && !args.includes("init")){
+
+            initVars(args);
+            exec('truffle migrate --reset', (err, stdout, stderr) => {
+                if (err) {
+                    console.error(stderr);
+                    console.log(stdout);
+                } else {
+                    console.log(stdout);
+            
+                    print("web directories");        
+                    initDirs();
+                    print("scripts");
+                    generateContracts();
+                    print("express");        
+                    generateExpress();
+                    print("run web-server using: node app/web/app.js");
+                }
+            });
         }
-
-        initVars(args);
-        print("migrations");
-        generateMigrations();
-
-        exec('truffle migrate --reset', (err, stdout, stderr) => {
-            if (err) {
-                console.error(stderr);
-                console.log(stdout);
-            } else {
-                console.log(stdout);
-        
-                print("web directories");        
-                initDirs();
-                print("scripts");
-                generateContracts();
-                print("express");        
-                generateExpress();
-                print("run web-server using: node app/web/app.js");
-            }
-        });
     }
 
     return {
-        deploy : main
+        run : main
     }
 })()
 
@@ -322,7 +325,7 @@ module.exports=function(app){
                     var content = `var ` + name + ` = artifacts.require("./` + src + `");
     
 module.exports = function(deployer) {
-deployer.deploy(`+ name + `);
+    deployer.deploy(`+ name + `);
 };`;
                     console.log("generating " + file);
                     fs.writeFileSync('migrations/' + file, content);
@@ -335,11 +338,28 @@ deployer.deploy(`+ name + `);
         return{
             mkfile: function(file, contractName, port, host, src){
                 var obj = JSON.parse(fs.readFileSync(src, "utf8"));
-
                 var content = `// All changes to this file will be overwritten
 var data_` + contractName + ` =
 {
-    "abi": `+ JSON.stringify(obj.abi) + `,
+    "abi": `+ JSON.stringify(obj.abi);
+
+                if(Object.keys(obj.networks).length == 0){
+                    content+=`
+};
+
+if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+} else {
+    web3 = new Web3(new Web3.providers.WebsocketProvider('ws://`+host+`:`+port+`'));
+}
+
+function get`+contractName+`Instance(contractAddress){
+    return new web3.eth.Contract(data_` + contractName + `.abi, contractAddress);
+}
+`;
+                }else{
+                
+                    content += `,
     "address": "`+ obj.networks[Object.keys(obj.networks)[Object.keys(obj.networks).length - 1]].address + `"
 };
 
@@ -349,11 +369,8 @@ if (typeof web3 !== 'undefined') {
     web3 = new Web3(new Web3.providers.WebsocketProvider('ws://`+host+`:`+port+`'));
 }
 
-var `+ contractName + `;
-web3.eth.getAccounts().then(arr => {
-    var accountAddress = arr[0];
-    `+ contractName + ` = new web3.eth.Contract(data_` + contractName + `.abi, data_` + contractName + `.address, { from: accountAddress });
-});`;
+var `+ contractName +` = new web3.eth.Contract(data_` + contractName + `.abi, data_` + contractName + `.address);`;
+            }
 
                 console.log("generating " + file);
                 fs.writeFileSync(file, content);
@@ -362,4 +379,4 @@ web3.eth.getAccounts().then(arr => {
     })()
 }
 
-solidity_web.deploy(cmdArgs);
+solidity_web.run(cmdArgs);
