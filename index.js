@@ -89,9 +89,7 @@ USAGE
     /**
      * Generates client-side contracts. 
      */
-    function generateContracts() { 
-
-       
+    function generateContracts() {        
         var msg = "Seems like there are no contracts to generate.";
 
         if (!fs.existsSync('build/contracts')) {
@@ -114,7 +112,8 @@ USAGE
 
     function generateMigrations() {
         if (!fs.existsSync('migrations')) {
-            throw Error('Did you run "truffle init"?');
+            console.log('ERROR: Did you run "truffle init"?');
+            return
         }
     
         var migrations = fs.readdirSync('migrations');
