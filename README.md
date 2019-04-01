@@ -48,7 +48,7 @@ On top of this, the `solidity-web` tool will generate an `app` folder, which con
 It can be changed to add rest functionality or or frontend code (HTML/Javascript/CSS). The `contracts.js` file creates a reference for each smart-contract.
 For demonstration purposes, an `index.html` is already present and references all smart-contract instances defined in `contract.js`.
 
-**6. Start the express webserver**   
+**7. Start the express webserver**   
 ```
 node app/web/app.js
 ```     
