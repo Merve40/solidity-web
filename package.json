@@ -1,6 +1,6 @@
 {
   "name": "solidity-web",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple framework for developing web applications with smart contracts written in solidity. ",
   "repository": {
     "type": "git",
