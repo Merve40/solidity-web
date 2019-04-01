@@ -4,6 +4,11 @@ This tool is built on top of [truffle-suite](https://github.com/trufflesuite/gan
 [express.js](https://github.com/expressjs/express) and is meant for deploying server-side code. The client-side is implemented using  [web3.js](https://github.com/ethereum/web3.js).
 It automatically and dynamically generates client-side code for accessing your smart-contracts. This tool simplifies the implementation of distributed apps (dapp), by taking care of configurations and auto-generating client api's.
 
+## NPM Package
+```
+npm i solidity-web
+```
+
 ## How to get started:
 **1. Initialize truffle**    
 It will generate `contracts` and `migrations` folders.
