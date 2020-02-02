@@ -298,7 +298,7 @@ module.exports=function(app){
         <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" 
         integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script>`; 
         
-        var endHtml =`</head>
+        var endHtml =`\n\t</head>
     <body>
         <p>Hello World!</p>
     </body>
