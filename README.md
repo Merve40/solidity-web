@@ -1,7 +1,7 @@
 # Solidity Web Automation Tool 
 
 This tool is built on top of [truffle-suite](https://github.com/trufflesuite/ganache-cli) &
-[express.js](https://github.com/expressjs/express) and is meant for facilitating the development of smart contracts for web applications. It intends to eliminate the need to copy paste contract ABI's and contract addresses into front-end javascripts scripts. Instead, it automatically creates a separate javascript for each contract, which is initialized with it's ABI and contract address. These scripts are then injected into the HTML (app/web/index.html), thus making it immediately accessible to other scripts.
+[express.js](https://github.com/expressjs/express) and is meant for facilitating the development of smart contracts for web applications. It intends to eliminate the need to copy paste contract ABI's and contract addresses into front-end javascripts scripts. Instead, it automatically creates a separate javascript for each contract, which is initialized with it's ABI and contract address. These scripts are then injected into the HTML (app/web/index.html), thus making it immediately accessible to other scripts. One of the biggest advantages of using this tool is, that every changes to the smart contract in solidity, are automatically updated in the front-end once `solidity-web deploy` is executed.
 
 
 ## NPM Package
